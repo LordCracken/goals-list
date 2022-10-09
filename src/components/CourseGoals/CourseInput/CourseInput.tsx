@@ -1,9 +1,37 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
+import styled from 'styled-components';
 
 import Button from '../../UI/Button/Button';
 
-import { ICourseInput } from '../../../interfaces';
+import {ICourseInput, IFormControl} from '../../../interfaces';
 import './CourseInput.css';
+
+const FormControl = styled.div<IFormControl>`
+  margin: 0.5rem 0;
+  
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: ${props => props.invalid ? '#f00' : '#000'};
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    border: 1px solid ${props => props.invalid ? '#f00' : '#ccc'};
+    font: inherit;
+    line-height: 1.5rem;
+    padding: 0 0.25rem;
+    background-color: ${props => props.invalid ? '#ffd7d7' : 'transparent'};
+
+    &:focus {
+      outline: none;
+      background: #fad0ec;
+      border-color: #8b005d;
+    }
+  }
+`;
 
 const CourseInput = ({ onAddGoal }: ICourseInput) => {
   const [enteredValue, setEnteredValue] = useState<string>('');
@@ -27,17 +55,13 @@ const CourseInput = ({ onAddGoal }: ICourseInput) => {
 
   return (
     <form onSubmit={formSubmitHandler}>
-      <div className="form-control">
-        <label style={{ color: !isValid ? '#f00' : '#000' }}>Course Goal</label>
+      <FormControl invalid={!isValid}>
+        <label>Course Goal</label>
         <input
-          style={{
-            borderColor: !isValid ? '#f00' : '#ccc',
-            backgroundColor: !isValid ? '#fa8072' : 'transparent',
-          }}
           type="text"
           onChange={goalInputChangeHandler}
         />
-      </div>
+      </FormControl>
       <Button type="submit">Add Goal</Button>
     </form>
   );
