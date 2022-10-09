@@ -25,7 +25,3 @@ export interface ICourseGoalItem {
 export interface ICourseInput {
   onAddGoal: (enteredText: string) => void;
 }
-
-export interface IFormControl {
-  invalid: boolean;
-}
